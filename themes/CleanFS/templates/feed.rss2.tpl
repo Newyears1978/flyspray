@@ -15,7 +15,7 @@
     <?php endif;
     foreach($task_details as $row):?>
     <item>
-      <title>FS#<?php echo Filters::noXSS($row['task_id']); ?>: <?php echo Filters::noXSS($row['item_summary']); ?></title>
+      <title>[<?php echo Filters::noXSS($proj->formatTaskId($row['task_id'])); ?>] <?php echo Filters::noXSS($row['item_summary']); ?></title>
       <author><?php echo Filters::noXSS($row['real_name']); ?></author>
       <pubDate><?php echo Filters::noXSS(date('r',intval($row['date_opened']))); ?></pubDate>
       <description><![CDATA[<?php

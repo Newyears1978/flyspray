@@ -324,6 +324,9 @@
     <field name="project_title" type="C" size="100">
       <NOTNULL/>
     </field>
+    <field name="project_key" type="C" size="10">
+      <DEFAULT value=""/>
+    </field>
     <field name="theme_style" type="C" size="20">
       <NOTNULL/>
       <DEFAULT value="0"/>
@@ -841,7 +844,7 @@
   </table>
   <sql>
     <query>UPDATE projects SET visible_fields = 'tasktype category severity priority status private assignedto reportedin dueversion duedate progress os votes' WHERE visible_fields = ''</query>
-    <query>UPDATE projects SET theme_style = 'CleanFS'</query>
+    <query>UPDATE projects SET theme_style = 'CleanFS', project_key = 'FS'</query>
     <query>UPDATE prefs SET pref_value = 'CleanFS' WHERE pref_name = 'global_theme'</query>
   </sql>
 </schema>

@@ -184,7 +184,7 @@ function tpl_draw_cell($task, $colname, $format = "<td class='%s'>%s</td>") {
 
 	switch ($colname) {
         case 'id':
-            $value = tpl_tasklink($task, $task['task_id']);
+            $value = tpl_tasklink($task, $proj->formatTaskId($task['task_id'], $task['project_id']));
             break;
         case 'summary':
 		$value = tpl_tasklink($task, utf8_substr($task['item_summary'], 0, 55));

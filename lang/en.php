@@ -1092,5 +1092,9 @@ Regards,',
 'captchaerror'            => 'CAPTCHA not solved. Please try again.',
 'registercaptcha'         => 'Please solve the CAPTCHA.',
 'regcaptcha'              => 'Show a CAPTCHA for new user registration.',
+'projectkey'              => 'Project Key',
+'emptyprojectkey'		  => 'Project keys must start with an uppercase letter, followed by one to ten alphanumeric uppercase characters.',
+'projectkeyhint1'		  => 'Project key prefixes each task in the project.',
+'projectkeyhint2'		  => 'It can be changed, but this is not a trivial task.',
 );
 ?>

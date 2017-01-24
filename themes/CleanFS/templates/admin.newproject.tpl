@@ -11,6 +11,11 @@
         <input id="projecttitle" name="project_title" value="<?php echo Filters::noXSS(Req::val('project_title')); ?>" type="text" class="required text" size="40" maxlength="100" />
       </li>
       <li>
+        <label for="projectkey"><?php echo Filters::noXSS(L('projectkey')); ?></label>
+        <input id="projectkey" name="project_key" value="<?php echo Filters::noXSS(Req::val('project_key')); ?>" type="text" class="required text" size="40" minlength="2" maxlength="10" /><br />
+		  <label><small><i class="fa fa-question-circle"></i></small></label><small><?php echo Filters::noXSS(L('projectkeyhint1')); ?></small>
+      </li>
+      <li>
         <label for="themestyle"><?php echo Filters::noXSS(L('themestyle')); ?></label>
         <select id="themestyle" name="theme_style">
           <?php echo tpl_options(Flyspray::listThemes(), Req::val('theme_style', $proj->prefs['theme_style']), true); ?>

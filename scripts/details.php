@@ -13,6 +13,13 @@ if (!defined('IN_FS')) {
 }
 
 $task_id = Req::num('task_id');
+if ( Req::val('key_task_id') && !Req::num('task_id') )
+{
+	if ( !($task_id = $proj->isTask(Req::val('key_task_id'))) )
+	{
+		Flyspray::show_error(10);
+	}
+}
 
 if ( !($task_details = Flyspray::GetTaskDetails($task_id)) ) {
     Flyspray::show_error(10);
@@ -37,7 +44,7 @@ if (!$user->can_view_task($task_details)) {
 	$page->assign('old_assigned', implode(' ', $task_details['assigned_to']));
 	$page->assign('tags', $task_details['tags']);
 
-	$page->setTitle(sprintf('FS#%d : %s', $task_details['task_id'], $task_details['item_summary']));
+	$page->setTitle(sprintf('[%s] %s', $proj->formatTaskId($task_details['task_id']), $task_details['item_summary']));
 
 	if ((Get::val('edit') || (Post::has('item_summary') && !isset($_SESSION['SUCCESS']))) && $user->can_edit_task($task_details)) {
 		$result = $db->Query('

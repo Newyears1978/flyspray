@@ -171,7 +171,7 @@ function tpl_form($action, $name=null, $method=null, $enctype=null, $attr='')
 
 function tpl_tasklink($task, $text = null, $strict = false, $attrs = array(), $title = array('status','summary','percent_complete'))
 {
-    global $user;
+    global $user, $proj;
 
     $params = array();
 
@@ -191,9 +191,9 @@ function tpl_tasklink($task, $text = null, $strict = false, $attrs = array(), $t
     }
 
     if (is_null($text)) {
-        $text = sprintf('FS#%d - %s', $task['task_id'], Filters::noXSS($summary));
+        $text = sprintf('[%s] %s', $proj->formatTaskId($task['task_id'], $task['project_id']), Filters::noXSS($summary));
     } elseif(is_string($text)) {
-        $text = htmlspecialchars(utf8_substr($text, 0, 64), ENT_QUOTES, 'utf-8');
+        $text = htmlspecialchars(utf8_substr($proj->fixProjectKeys($text), 0, 64), ENT_QUOTES, 'utf-8');
     } else {
         //we can't handle non-string stuff here.
         return '';
@@ -862,7 +862,7 @@ class TextFormatter
 
     public static function render($text, $type = null, $id = null, $instructions = null)
     {
-        global $conf;
+        global $conf, $proj;
 
         $methods = get_class_methods($conf['general']['syntax_plugin'] . '_TextFormatter');
         $methods = is_array($methods) ? $methods : array();
@@ -886,7 +886,7 @@ class TextFormatter
             //$text = ' ' . nl2br($text) . ' ';
             
             // Change FS#123 into hyperlinks to tasks
-            return preg_replace_callback("/\b(?:FS#|bug )(\d+)\b/", 'tpl_fast_tasklink', trim($text));
+            return preg_replace_callback("/\b(?:".$proj->key."-|#|FS#|bug )(\d+)\b/", 'tpl_fast_tasklink', trim($text));
         }
     }
 

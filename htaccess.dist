@@ -90,6 +90,7 @@ RewriteRule ^task/([0-9]+)comment([0-9]+)$ index.php?do=details&task_id=$1commen
 RewriteRule ^task/([0-9]+)/depends$ index.php?do=depends&task_id=$1 [L,QSA]
 RewriteRule ^task/([0-9]+)/depends&prune=([0-9]+)$ index.php?do=depends&task_id=$1&prune=$2 [L,QSA]
 RewriteRule ^task/([0-9]+)/edit$ index.php?do=details&task_id=$1&edit=yep [L,QSA]
+RewriteRule ^task/([A-Z][A-Z0-9]{1,9}-[0-9]+)$ index.php?do=details&key_task_id=$1 [L,QSA]
 
 RewriteRule ^newtask$ index.php?do=newtask [L,QSA]
 RewriteRule ^newtask/proj([0-9]+)$ index.php?do=newtask&project=$1 [L,QSA]

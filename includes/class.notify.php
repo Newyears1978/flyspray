@@ -623,11 +623,11 @@ class Notifications {
 		'estimated_effort' => tL('estimatedeffort', $lang));
 
             $body .= tL('taskchanged', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ': ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n";
 
             $online .= tL('taskchanged', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'];
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'];
 
             foreach ($arg1 as $change) {
                 if ($change[0] == 'assigned_to_name') {
@@ -647,7 +647,7 @@ class Notifications {
         // {{{ Task closed
         if ($type == NOTIFY_TASK_CLOSED) {
             $body .= tL('notify.taskclosed', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n\n";
             $body .= tL('reasonforclosing', $lang) . ' ' . $task_details['resolution_name'] . "\n";
 
@@ -659,19 +659,19 @@ class Notifications {
             $body .= CreateURL('details', $task_id);
 
             $online .= tL('notify.taskclosed', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Task re-opened
         if ($type == NOTIFY_TASK_REOPENED) {
             $body .= tL('notify.taskreopened', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n\n";
             $body .= tL('moreinfo', $lang) . "\n";
             $body .= CreateURL('details', $task_id);
 
             $online .= tL('notify.taskreopened', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Dependency added
@@ -679,15 +679,15 @@ class Notifications {
             $depend_task = Flyspray::getTaskDetails($arg1);
 
             $body .= tL('newdep', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n";
             $body .= CreateURL('details', $task_id) . "\n\n\n";
             $body .= tL('newdepis', $lang) . ':' . "\n\n";
-            $body .= 'FS#' . $depend_task['task_id'] . ' - ' . $depend_task['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($depend_task['task_id']) . ' - ' . $depend_task['item_summary'] . "\n";
             $body .= CreateURL('details', $depend_task['task_id']);
 
             $online .= tL('newdep', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Dependency removed
@@ -695,15 +695,15 @@ class Notifications {
             $depend_task = Flyspray::getTaskDetails($arg1);
 
             $body .= tL('notify.depremoved', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n";
             $body .= CreateURL('details', $task_id) . "\n\n\n";
             $body .= tL('removeddepis', $lang) . ':' . "\n\n";
-            $body .= 'FS#' . $depend_task['task_id'] . ' - ' . $depend_task['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($depend_task['task_id']) . ' - ' . $depend_task['item_summary'] . "\n";
             $body .= CreateURL('details', $depend_task['task_id']);
 
             $online .= tL('notify.depremoved', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Comment added
@@ -717,7 +717,7 @@ class Notifications {
             $comment = $db->FetchRow($result);
 
             $body .= tL('notify.commentadded', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n\n";
             $body .= "----------\n";
             $body .= $comment['comment_text'] . "\n";
@@ -732,19 +732,19 @@ class Notifications {
             $body .= CreateURL('details', $task_id) . '#comment' . $comment['comment_id'];
 
             $online .= tL('notify.commentadded', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Attachment added
         if ($type == NOTIFY_ATT_ADDED) {
             $body .= tL('newattachment', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n\n";
             $body .= tL('moreinfo', $lang) . "\n";
             $body .= CreateURL('details', $task_id);
 
             $online .= tL('newattachment', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Related task added
@@ -752,26 +752,26 @@ class Notifications {
             $related_task = Flyspray::getTaskDetails($arg1);
 
             $body .= tL('notify.relatedadded', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n";
             $body .= CreateURL('details', $task_id) . "\n\n\n";
             $body .= tL('relatedis', $lang) . ':' . "\n\n";
-            $body .= 'FS#' . $related_task['task_id'] . ' - ' . $related_task['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($related_task['task_id']) . ' - ' . $related_task['item_summary'] . "\n";
             $body .= CreateURL('details', $related_task['task_id']);
 
             $online .= tL('notify.relatedadded', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Ownership taken
         if ($type == NOTIFY_OWNERSHIP) {
             $body .= implode(', ', $task_details['assigned_to_name']) . ' ' . tL('takenownership', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n\n";
             $body .= tL('moreinfo', $lang) . "\n";
             $body .= CreateURL('details', $task_id);
 
             $online .= implode(', ', $task_details['assigned_to_name']) . ' ' . tL('takenownership', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ".";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ".";
         } // }}}
         // {{{ Confirmation code
         if ($type == NOTIFY_CONFIRMATION) {
@@ -787,19 +787,19 @@ class Notifications {
         // {{{ Pending PM request
         if ($type == NOTIFY_PM_REQUEST) {
             $body .= tL('requiresaction', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho') . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n\n";
             $body .= tL('moreinfo', $lang) . "\n";
             $body .= CreateURL('details', $task_id);
 
             $online .= tL('requiresaction', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ PM request denied
         if ($type == NOTIFY_PM_DENY_REQUEST) {
             $body .= tL('pmdeny', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n\n";
             $body .= tL('denialreason', $lang) . ':' . "\n";
             $body .= $arg1 . "\n\n";
@@ -807,19 +807,19 @@ class Notifications {
             $body .= CreateURL('details', $task_id);
 
             $online .= tL('pmdeny', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ New assignee
         if ($type == NOTIFY_NEW_ASSIGNEE) {
             $body .= tL('assignedtoyou', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n\n";
             $body .= tL('moreinfo', $lang) . "\n";
             $body .= CreateURL('details', $task_id);
 
             $online .= tL('assignedtoyou', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Reversed dep
@@ -827,15 +827,15 @@ class Notifications {
             $depend_task = Flyspray::getTaskDetails($arg1);
 
             $body .= tL('taskwatching', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n";
             $body .= CreateURL('details', $task_id) . "\n\n\n";
             $body .= tL('isdepfor', $lang) . ':' . "\n\n";
-            $body .= 'FS#' . $depend_task['task_id'] . ' - ' . $depend_task['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($depend_task['task_id']) . ' - ' . $depend_task['item_summary'] . "\n";
             $body .= CreateURL('details', $depend_task['task_id']);
 
             $online .= tL('taskwatching', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Reversed dep - removed
@@ -843,26 +843,26 @@ class Notifications {
             $depend_task = Flyspray::getTaskDetails($arg1);
 
             $body .= tL('taskwatching', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n";
             $body .= CreateURL('details', $task_id) . "\n\n\n";
             $body .= tL('isnodepfor', $lang) . ':' . "\n\n";
-            $body .= 'FS#' . $depend_task['task_id'] . ' - ' . $depend_task['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($depend_task['task_id']) . ' - ' . $depend_task['item_summary'] . "\n";
             $body .= CreateURL('details', $depend_task['task_id']);
 
             $online .= tL('taskwatching', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ User added to assignees list
         if ($type == NOTIFY_ADDED_ASSIGNEES) {
             $body .= tL('useraddedtoassignees', $lang) . "\n\n";
-            $body .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . "\n";
+            $body .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . "\n";
             $body .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . ")\n";
             $body .= CreateURL('details', $task_id);
 
             $online .= tL('useraddedtoassignees', $lang) . ". ";
-            $online .= 'FS#' . $task_id . ' - ' . $task_details['item_summary'] . ". ";
+            $online .= $proj->formatTaskId($task_id) . ' - ' . $task_details['item_summary'] . ". ";
             $online .= tL('userwho', $lang) . ' - ' . $user->infos['real_name'] . ' (' . $user->infos['user_name'] . "). ";
         } // }}}
         // {{{ Anon-task has been opened

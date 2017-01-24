@@ -91,6 +91,7 @@ if(is_readable(BASEDIR.'/themes/'.$this->_theme.'tags.css')): ?>
 	<?php endif;?>
 
 <div id="content">
+	<?php echo 'Project key: ' . $proj->key; ?>
 	<div class="clear"></div>
 	<?php $show_message = explode(' ', $fs->prefs['pages_welcome_msg']);
 	if ($fs->prefs['intro_message'] && ($proj->id == 0 || $proj->prefs['disp_intro']) && (in_array($do, $show_message)) ):?>

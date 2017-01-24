@@ -22,7 +22,7 @@
   </channel>
   <?php foreach($task_details as $row): ?>
   <item rdf:about="<?php echo Filters::noXSS(CreateURL('details', $row['task_id'])); ?>">
-    <title>FS#<?php echo Filters::noXSS($row['task_id']); ?>: <?php echo Filters::noXSS($row['item_summary']); ?></title>
+    <title>[<?php echo Filters::noXSS($proj->formatTaskId($row['task_id'])); ?>] <?php echo Filters::noXSS($row['item_summary']); ?></title>
     <link><?php echo Filters::noXSS(CreateURL('details', $row['task_id'])); ?></link>
     <dc:date><?php echo Filters::noXSS(date('Y-m-d\TH:i:s\Z',intval($row['last_edited_time']))); ?></dc:date>
     <dc:creator><?php echo Filters::noXSS($row['real_name']); ?></dc:creator>

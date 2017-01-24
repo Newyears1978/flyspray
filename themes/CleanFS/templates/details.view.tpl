@@ -64,7 +64,7 @@
         <br>
         <?php
         foreach ($deps as $dependency){
-            echo "FS#".$dependency['task_id']." : ".$dependency['item_summary']."</br>";
+            echo $proj->formatTaskId($dependency['task_id']) . ' : '.$dependency['item_summary'].'</br>';
         }
         ?>
     </span>
@@ -134,7 +134,7 @@
               <input type="hidden" name="action" value="details.newdep" />
               <input type="hidden" name="task_id" value="<?php echo Filters::noXSS($task_details['task_id']); ?>" />
               <label for="dep_task_id"><?php echo Filters::noXSS(L('newdependency')); ?></label>
-              FS# <input class="text" type="text" value="<?php echo Filters::noXSS(Req::val('dep_task_id')); ?>" id="dep_task_id" name="dep_task_id" size="5" maxlength="10" />
+              <input class="text" type="text" value="<?php echo Filters::noXSS(Req::val('dep_task_id')); ?>" id="dep_task_id" name="dep_task_id" size="5" maxlength="10" />
               <button type="submit" name="submit"><?php echo Filters::noXSS(L('add')); ?></button>
               </form>
             </li>
@@ -683,7 +683,7 @@ function quick_edit(elem, id)
 
 <div id="taskdetailsfull">
 	<h2 class="summary severity<?php echo Filters::noXSS($task_details['task_severity']); ?>">
-	FS#<?php echo Filters::noXSS($task_details['task_id']); ?> - <?php echo Filters::noXSS($task_details['item_summary']); ?>
+	<?php echo Filters::noXSS($proj->formatTaskId($task_details['task_id'])) . ' ' . Filters::noXSS($task_details['item_summary']); ?>
 	</h2>
 	<span class="tags"><?php foreach($tags as $tag): ?><span class="tag t<?php echo $tag['tag_id'].($tag['class']? ' '.$tag['class'] : ''); ?>" title="<?php echo Filters::noXSS($tag['tag']); ?>"></span><?php endforeach; ?></span>
 	<div id="taskdetailstext"><?php echo $task_text; ?></div>

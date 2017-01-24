@@ -1308,6 +1308,11 @@ switch ($action = Req::val('action'))
             Flyspray::show_error(L('emptytitle'));
             break;
         }
+	
+		if ( !$proj->isProjectKeyCorrect(Post::val('project_key')) ) {
+			Flyspray::show_error(L('emptyprojectkey'));
+			break;
+		}
 
         $viscols =    $fs->prefs['visible_columns']
                     ? $fs->prefs['visible_columns']
@@ -1319,11 +1324,11 @@ switch ($action = Req::val('action'))
 
 
         $db->Query('INSERT INTO  {projects}
-                                 ( project_title, theme_style, intro_message,
+                                 ( project_title, project_key, theme_style, intro_message,
                                    others_view, others_viewroadmap, anon_open, project_is_active,
                                    visible_columns, visible_fields, lang_code, notify_email, notify_jabber, disp_intro)
-                         VALUES  (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?)',
-        array(Post::val('project_title'), Post::val('theme_style'),
+                         VALUES  (?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?)',
+        array(Post::val('project_title'), Post::val('project_key'), Post::val('theme_style'),
               Post::val('intro_message'), Post::num('others_view', 0), Post::num('others_viewroadmap', 0),
               Post::num('anon_open', 0),  $viscols, $visfields,
               Post::val('lang_code', 'en'), '', '',
@@ -1402,8 +1407,13 @@ switch ($action = Req::val('action'))
             Flyspray::show_error(L('emptytitle'));
             break;
         }
+        
+        if ( !$proj->isProjectKeyCorrect(Post::val('project_key')) ) {
+			Flyspray::show_error(L('emptyprojectkey'));
+        	break;
+		}
 
-        $cols = array( 'project_title', 'theme_style', 'lang_code', 'default_task', 'default_entry',
+        $cols = array( 'project_title', 'project_key', 'theme_style', 'lang_code', 'default_task', 'default_entry',
                 'intro_message', 'notify_email', 'notify_jabber', 'notify_subject', 'notify_reply',
                 'feed_description', 'feed_img_url','default_due_version','use_effort_tracking',
                 'pages_intro_msg', 'estimated_effort_format', 'current_effort_done_format');
@@ -2070,21 +2080,10 @@ switch ($action = Req::val('action'))
 
         // if the user has not the permission to view all tasks, check if the task
         // is in tasks allowed to see, otherwise tell that the task does not exist.
-        if (!$user->perms('view_tasks')) {
-            $taskcheck = Flyspray::GetTaskDetails(Post::val('related_task'));
-            if (!$user->can_view_task($taskcheck)) {
-                Flyspray::show_error(L('relatedinvalid'));
-                break;
-            }
-        }
-
-        $sql = $db->Query('SELECT  project_id
-                             FROM  {tasks}
-                            WHERE  task_id = ?',
-        array(Post::val('related_task')));
-        if (!$db->CountRows($sql)) {
-            Flyspray::show_error(L('relatedinvalid'));
-            break;
+		$related_task = $proj->isTask(Post::val('related_task'));
+		if ( !$related_task ) {
+			Flyspray::show_error(L('relatedinvalid'));
+			break;
         }
 
         $sql = $db->Query("SELECT related_id
@@ -2092,8 +2091,8 @@ switch ($action = Req::val('action'))
                             WHERE this_task = ? AND related_task = ?
                                   OR
                                   related_task = ? AND this_task = ?",
-        array($task['task_id'], Post::val('related_task'),
-              $task['task_id'], Post::val('related_task')));
+        array($task['task_id'], $related_task,
+              $task['task_id'], $related_task));
 
         if ($db->CountRows($sql)) {
             Flyspray::show_error(L('relatederror'));
@@ -2101,11 +2100,11 @@ switch ($action = Req::val('action'))
         }
 
         $db->Query("INSERT INTO {related} (this_task, related_task) VALUES(?,?)",
-                array($task['task_id'], Post::val('related_task')));
+                array($task['task_id'], $related_task));
 
-        Flyspray::logEvent($task['task_id'], 11, Post::val('related_task'));
-        Flyspray::logEvent(Post::val('related_task'), 15, $task['task_id']);
-        $notify->Create(NOTIFY_REL_ADDED, $task['task_id'], Post::val('related_task'), null, NOTIFY_BOTH, $proj->prefs['lang_code']);
+        Flyspray::logEvent($task['task_id'], 11, $related_task);
+        Flyspray::logEvent($related_task, 15, $task['task_id']);
+        $notify->Create(NOTIFY_REL_ADDED, $task['task_id'], $related_task, null, NOTIFY_BOTH, $proj->prefs['lang_code']);
 
         $_SESSION['SUCCESS'] = L('relatedaddedmsg');
         break;
@@ -2470,45 +2469,44 @@ switch ($action = Req::val('action'))
 
         // if the user has not the permission to view all tasks, check if the task
         // is in tasks allowed to see, otherwise tell that the task does not exist.
-        if (!$user->perms('view_tasks')) {
-            $taskcheck = Flyspray::GetTaskDetails(Post::val('dep_task_id'));
-            if (!$user->can_view_task($taskcheck)) {
-                Flyspray::show_error(L('dependaddfailed'));
-                break;
-            }
-        }
+		$dep_task_id = $proj->isTask(Post::val('dep_task_id'));
+		if ( !$dep_task_id ) {
+			Flyspray::show_error(L('dependaddfailed'));
+			break;
+		}
+
 
         // First check that the user hasn't tried to add this twice
         $sql1 = $db->Query('SELECT  COUNT(*) FROM {dependencies}
                              WHERE  task_id = ? AND dep_task_id = ?',
-        array($task['task_id'], Post::val('dep_task_id')));
+        array($task['task_id'], $dep_task_id));
 
         // or that they are trying to reverse-depend the same task, creating a mutual-block
         $sql2 = $db->Query('SELECT  COUNT(*) FROM {dependencies}
                              WHERE  task_id = ? AND dep_task_id = ?',
-        array(Post::val('dep_task_id'), $task['task_id']));
+        array($dep_task_id, $task['task_id']));
 
         // Check that the dependency actually exists!
         $sql3 = $db->Query('SELECT COUNT(*) FROM {tasks} WHERE task_id = ?',
-                array(Post::val('dep_task_id')));
+                array($dep_task_id));
 
         if ($db->fetchOne($sql1) || $db->fetchOne($sql2) || !$db->fetchOne($sql3)
             // Check that the user hasn't tried to add the same task as a dependency
-            || Post::val('task_id') == Post::val('dep_task_id'))
+            || Post::val('task_id') == $dep_task_id)
         {
             Flyspray::show_error(L('dependaddfailed'));
             break;
         }
-        $notify->Create(NOTIFY_DEP_ADDED, $task['task_id'], Post::val('dep_task_id'), null, NOTIFY_BOTH, $proj->prefs['lang_code']);
-        $notify->Create(NOTIFY_REV_DEP, Post::val('dep_task_id'), $task['task_id'], null, NOTIFY_BOTH, $proj->prefs['lang_code']);
+        $notify->Create(NOTIFY_DEP_ADDED, $task['task_id'], $dep_task_id, null, NOTIFY_BOTH, $proj->prefs['lang_code']);
+        $notify->Create(NOTIFY_REV_DEP, $dep_task_id, $task['task_id'], null, NOTIFY_BOTH, $proj->prefs['lang_code']);
 
         // Log this event to the task history, both ways
-        Flyspray::logEvent($task['task_id'], 22, Post::val('dep_task_id'));
-        Flyspray::logEvent(Post::val('dep_task_id'), 23, $task['task_id']);
+        Flyspray::logEvent($task['task_id'], 22, $dep_task_id);
+        Flyspray::logEvent($dep_task_id, 23, $task['task_id']);
 
         $db->Query('INSERT INTO  {dependencies} (task_id, dep_task_id)
                          VALUES  (?,?)',
-        array($task['task_id'], Post::val('dep_task_id')));
+        array($task['task_id'], $dep_task_id));
 
         $_SESSION['SUCCESS'] = L('dependadded');
         break;

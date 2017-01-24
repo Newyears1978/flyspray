@@ -18,6 +18,13 @@
       </li>
 
       <li>
+        <label for="projectkey"><?php echo Filters::noXSS(L('projectkey')); ?></label>
+        <input id="projectkey" name="project_key" class="text" type="text" minlength="2" maxlength="10"
+          value="<?php echo Filters::noXSS(Post::val('project_key', $proj->prefs['project_key'])); ?>" /><br />
+		  <label><small><i class="fa fa-question-circle"></i></small></label><small><?php echo Filters::noXSS(L('projectkeyhint1')) . ' ' . Filters::noXSS(L('projectkeyhint2')); ?></small>
+      </li>
+
+      <li>
         <label for="defaultcatowner"><?php echo Filters::noXSS(L('defaultcatowner')); ?></label>
         <?php echo tpl_userselect('default_cat_owner', Post::val('default_cat_owner', $proj->prefs['default_cat_owner']), 'defaultcatowner'); ?>
       </li>

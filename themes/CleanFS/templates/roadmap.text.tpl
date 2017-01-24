@@ -41,7 +41,7 @@
 
 <?php foreach($milestone['open_tasks'] as $task):
           if(!$user->can_view_task($task)) continue; ?>
-FS#<?php echo Filters::noXSS($task['task_id']); ?> - <?php echo Filters::noXSS($task['item_summary']); ?>
+<?php echo Filters::noXSS($proj->formatTaskId($task['task_id'])); ?> - <?php echo Filters::noXSS($task['item_summary']); ?>
 
 
 <?php endforeach; ?>

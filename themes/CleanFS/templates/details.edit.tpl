@@ -176,7 +176,7 @@ li.errorinput{background-color:#fc9;}
 	</div>
 </div>
 <div id="taskdetailsfull">
-	<label for="itemsummary"<?php echo isset($_SESSION['ERRORS']['summaryrequired']) ? ' class="summary errorinput" title="'.eL('summaryrequired').'"':' class="summary"'; ?>>FS#<?php echo Filters::noXSS($task_details['task_id']); ?> <?php echo Filters::noXSS(L('summary')); ?>:
+	<label for="itemsummary"<?php echo isset($_SESSION['ERRORS']['summaryrequired']) ? ' class="summary errorinput" title="'.eL('summaryrequired').'"':' class="summary"'; ?>><?php echo Filters::noXSS($proj->formatTaskId($task_details['task_id'])); ?> <?php echo Filters::noXSS(L('summary')); ?>:
 		<input placeholder="<?php echo Filters::noXSS(L('summary')); ?>" type="text" name="item_summary" id="itemsummary" maxlength="100" value="<?php echo Filters::noXSS(Req::val('item_summary', $task_details['item_summary'])); ?>" />
 	</label>
 	<?php

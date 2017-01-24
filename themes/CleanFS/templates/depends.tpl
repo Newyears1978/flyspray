@@ -1,6 +1,6 @@
 <div style="text-align:center;" class="box">
   <p><b><?php echo Filters::noXSS(L('pruninglevel')); ?>: </b><?php echo implode(" &nbsp;|&nbsp; \n", $strlist); ?></p>
-  <h2><a href="<?php echo Filters::noXSS(CreateUrl('details', $task_id)); ?>">FS#<?php echo $task_id; ?></a>: <?php echo Filters::noXSS(L('dependencygraph')); ?></h2>
+  <h2><a href="<?php echo Filters::noXSS(CreateUrl('details', $task_id)); ?>"><?php echo $proj->formatTaskId($task_id); ?></a> <?php echo Filters::noXSS(L('dependencygraph')); ?></h2>
 
 <div id="infovis" style="width:90%;height:50em"></div>    
 

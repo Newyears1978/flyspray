@@ -3,6 +3,7 @@
 class Project
 {
 	var $id = 0;
+	var $key = '';
 	var $prefs = array();
 
 	function __construct($id)
@@ -17,6 +18,7 @@ class Project
 			if ($db->countRows($sql)) {
 				$this->prefs = $db->FetchRow($sql);
 				$this->id    = (int) $this->prefs['project_id'];
+				$this->key   = (string) $this->prefs['project_key'];
 				$sortrules=explode(',', $this->prefs['default_order_by']);
 				foreach($sortrules as $rule){
 					$last_space=strrpos($rule, ' ');
@@ -479,6 +481,204 @@ class Project
 
         return array_values($results);
     }
+	
+	
+	/**
+	 * Returns all Project Keys.
+	 *
+	 * @return array with project keys
+	 * @access public
+	 */
+	static function getAllProjectKeys()
+	{
+		$db = $GLOBALS['db'];
+		
+		$result = $db->Query("SELECT project_key FROM {projects};");
+		return  $db->fetchCol($result);
+	}
+	
+	
+	/**
+	 * Returns the project key of the project.
+	 *
+	 * @param $project_id
+	 * @return string with project key
+	 * @access private
+	 */
+	private function getProjectKey($project_id)
+	{
+		$db = $GLOBALS['db'];
+		
+		$result = $db->Query("SELECT project_key FROM {projects} WHERE project_id = ?;", array($project_id));
+		$result = $db->fetchCol($result);
+		return $result[0];
+	}
+	
+	
+	/**
+	 * Returns the project key of the task.
+	 *
+	 * @param $task_id
+	 * @return string with project key
+	 * @access private
+	 */
+	private function getProjectKeyByTaskId($task_id)
+	{
+		$db = $GLOBALS['db'];
+		
+		$result = $db->Query("SELECT p.project_key FROM {projects} p
+				INNER JOIN {tasks} t ON t.project_id = p.project_id
+				WHERE t.task_id = ?;", array($task_id));
+		$result = $db->fetchCol($result);
+		return $result[0];
+	}
+	
+	
+	/**
+	 * Checking if <project_key>-<task_id> exists.
+	 *
+	 * @param $key_task_id
+	 * @return int|boolean
+	 * @access private
+	 */
+	private function checkIfKeyTaskExists($key_task_id)
+	{
+		$db = $GLOBALS['db'];
+		
+		$kt = explode('-', $key_task_id);
+		$result = 0;
+		if ( is_array($kt) && count($kt) >= 2 )
+		{
+			$result = $db->Query("SELECT p.project_key FROM {projects} p
+				INNER JOIN {tasks} t ON t.project_id = p.project_id
+				WHERE t.task_id = ? AND p.project_key = ?;", array($kt[1], $kt[0]));
+			$result = $db->CountRows($result);
+		}
+		return $result;
+	}
+	
+	
+	/**
+	 * Checking if the task_id is well formatted based on rules, also checking if exists.
+	 *
+	 * @param $task
+	 * @return string|false
+	 * @access public
+	 */
+	public function isTask($task)
+	{
+		$db = $GLOBALS['db'];
+		$user = $GLOBALS['user'];
+		
+		preg_match("/\b(?:\w+-|#|FS#|bug )(\d+)\b/", $task, $match);
+		
+		if (is_array($match) && count($match) >= 2)
+		{
+			$st = $match[1];
+			if ( strpos($match[0], '-') !== false )
+			{
+				if ( $this->checkIfKeyTaskExists($match[0]) ) $st = $match[1];
+				else $st = $task;
+			}
+			
+			if (is_numeric($st))
+			{
+				// checking if user has permission to view the task
+				if ( !$user->perms('view_tasks') )
+				{
+					$taskcheck = Flyspray::GetTaskDetails($task);
+					if ( !$user->can_view_task($taskcheck) ) return false;
+				}
+
+				return $st;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		elseif ( is_numeric($task) )
+		{
+			// checking if task_id exists
+			$sql = $db->Query('SELECT  project_id
+                             FROM  {tasks}
+                            WHERE  task_id = ?',
+				array($task));
+			if (!$db->CountRows($sql)) return false;
+			
+			// checking if user has permission to view the task
+			if ( !$user->perms('view_tasks') )
+			{
+				$taskcheck = Flyspray::GetTaskDetails($task);
+				if ( !$user->can_view_task($taskcheck) ) return false;
+			}
+			
+			return $task;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * Format the task_id to <project_key>-<task_id>
+	 *
+	 * @param $task_id
+	 * @param null $project_id
+	 * @param null $project_key
+	 * @return string
+	 * @access public
+	 */
+	public function formatTaskId($task_id, $project_id = null, $project_key = null)
+	{
+		if ( $project_id == null && $project_key == null ) $project_key = $this->getProjectKey($this->id);
+		elseif ( $project_key == null ) $project_key = $this->getProjectKey($project_id);
+		return substr($project_key, 0, 10) . '-' . $task_id;
+	}
+	
+	
+	/**
+	 * Checking if a Project key is correct based on Rules (regex).
+	 *
+	 * @param string $project_key
+	 * @return bool
+	 * @access public
+	 */
+	public function isProjectKeyCorrect($project_key)
+	{
+		$result = true;
+		preg_match("/^([A-Z][A-Z0-9]{1,9})$/", $project_key, $match);
+		if ( !count($match) ) $result = false;
+		
+		return $result;
+	}
+	
+	
+	/**
+	 * Replace all Task Id's to the correct <project_key>-<task_id>
+	 * Also replace the FS# and bug <x>
+	 *
+	 * @param $text
+	 * @return string
+	 * @access public
+	 */
+	public function fixProjectKeys($text)
+	{
+		$result = $text;
+		
+		preg_match_all("/\b(?:\w+-|#|FS#|bug )(\d+)\b/", $text, $match);
+		if ( is_array($match) && count($match) >= 2 )
+		{
+			foreach ($match[0] as $k => $key_task_id)
+			{
+				$_pk = $this->getProjectKeyByTaskId($match[1][$k]);
+				$result = str_replace($key_task_id, $this->formatTaskId($match[1][$k], null, $_pk), $result);
+			}
+		}
+		return $result;
+	}
 
     /* }}} */
 }

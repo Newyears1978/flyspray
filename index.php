@@ -118,13 +118,16 @@ if (Req::has('project') && Req::val('project') != 0 && !$user->can_select_projec
 	exit;
 }
 
-if ($show_task = Get::val('show_task')) {
+if (Get::val('show_task')) {
     // If someone used the 'show task' form, redirect them
-    if (is_numeric($show_task)) {
-        Flyspray::Redirect( CreateURL('details', $show_task) );
-    } else {
-        Flyspray::Redirect( $baseurl . '?string=' .  $show_task);
-    }
+	if ( $show_task = $proj->isTask(Get::val('show_task')) )
+	{
+		Flyspray::Redirect( CreateURL('details', $show_task) );
+	}
+	else
+	{
+		Flyspray::Redirect( $baseurl . '?string=' .  Get::val('show_task'));
+	}
 }
 
 if (Flyspray::requestDuplicated()) {

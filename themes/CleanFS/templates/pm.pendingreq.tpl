@@ -18,11 +18,11 @@
       <td>
       <?php if ($req['request_type'] == 1) : ?>
       <?php echo Filters::noXSS(L('closetask')); ?> -
-      <a href="<?php echo Filters::noXSS(CreateURL('details', $req['task_id'])); ?>">FS#<?php echo Filters::noXSS($req['task_id']); ?> :
+      <a href="<?php echo Filters::noXSS(CreateURL('details', $req['task_id'])); ?>"><?php echo Filters::noXSS($proj->formatTaskId($req['task_id'])); ?> :
         <?php echo Filters::noXSS($req['item_summary']); ?></a>
       <?php elseif ($req['request_type'] == 2) : ?>
       <?php echo Filters::noXSS(L('reopentask')); ?> -
-      <a href="<?php echo Filters::noXSS(CreateURL('details', $req['task_id'])); ?>">FS#<?php echo Filters::noXSS($req['task_id']); ?> :
+      <a href="<?php echo Filters::noXSS(CreateURL('details', $req['task_id'])); ?>"><?php echo Filters::noXSS($proj->formatTaskId($req['task_id'])); ?> :
         <?php echo Filters::noXSS($req['item_summary']); ?></a>
       <?php endif; ?>
       </td>
