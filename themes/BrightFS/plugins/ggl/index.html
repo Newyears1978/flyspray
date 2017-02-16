@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Google+ Like Buttons v1.0.0</title>
+	<link rel="stylesheet" type="text/css" href="css/ggl-buttons.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/ggl-icons.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/ggl-dropdown.css" media="screen" />
+
+	<style type="text/css">
+		.well {
+			background: #F1F1F1;
+			padding: 11px;
+			border: 1px solid #D2D2D2;
+			width: 843px;
+			margin-bottom: 20px;
+		}
+		.well:before, .well:after {
+			content: "\0020"; display: block; height: 0; visibility: hidden;
+		}
+		.well:after { clear: both; }
+		.well { zoom: 1; }
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			// Toggle the dropdown menu's
+			$(".dropdown .button, .dropdown button").click(function () {
+				if (!$(this).find('span.toggle').hasClass('active')) {
+					$('.dropdown-slider').slideUp();
+					$('span.toggle').removeClass('active');
+				}
+
+				// open selected dropown
+				$(this).parent().find('.dropdown-slider').slideToggle('fast');
+				$(this).find('span.toggle').toggleClass('active');
+
+				return false;
+			});
+		});
+
+		// Close open dropdown slider by clicking elsewhwere on page
+		$(document).bind('click', function (e) {
+			if (e.target.id != $('.dropdown').attr('class')) {
+				$('.dropdown-slider').slideUp();
+				$('span.toggle').removeClass('active');
+			}
+		});
+	</script>
+</head>
+<body>
+	<h1>Google+ Like Buttons v1.0.0</h1>
+	<p></p>
+
+	<h2>Input buttons</h2>
+	<div class="well">
+		<input type="button" value="Standard" />
+		<input type="button" class="ggl button" value="None" />
+		<input type="button" class="ggl button gray" value="Gray" />
+		<a href="#" class="ggl button gray"><span class="label">Gray</span></a>
+		<input type="button" class="ggl button calc" value="Calc" />
+		<input type="button" class="ggl button blue" value="Blue" />
+		<input type="button" class="ggl button red" value="Red" />
+		<input type="button" class="ggl button orange" value="Orange" />
+		<input type="button" class="ggl button green" value="Green" />
+		<input type="button" class="ggl button dark" value="Dark" />
+		<input type="button" class="ggl button green" disabled value="Disabled" />
+	</div>
+	<div class="well">
+		<button class="ggl button gray"><span class="icon icon4"></span><span class="label">Profile</span></button>
+		<button class="ggl button gray"><span class="icon icon4"></span><span class="label">Profile</span></button>
+		<button class="ggl button gray"><span class="icon icon1"></span></button>
+	</div>
+	<div class="well">
+		<button class="ggl button gray left">left</button>
+		<button class="ggl button gray middle">middle</button>
+		<button class="ggl button gray right">right</button>
+	</div>
+
+	<div class="ggl calculator" style="width: 160px">
+		<span style="width: 120px;">
+			<input type="button" class="ggl button calc-k" value="C" />
+			<input type="button" class="ggl button calc-k" value="/" />
+			<input type="button" class="ggl button calc-k" value="*" />
+			<input type="button" class="ggl button calc" value="7" />
+			<input type="button" class="ggl button calc" value="8" />
+			<input type="button" class="ggl button calc" value="9" />
+			<input type="button" class="ggl button calc" value="4" />
+			<input type="button" class="ggl button calc" value="5" />
+			<input type="button" class="ggl button calc" value="6" />
+			<input type="button" class="ggl button calc" value="1" />
+			<input type="button" class="ggl button calc" value="2" />
+			<input type="button" class="ggl button calc" value="3" />
+			<input type="button" class="ggl button calc" style="width: 80px" value="0" />
+			<input type="button" class="ggl button calc" value="." />
+		</span>
+		<span style="width: 40px">
+			<input type="button" class="ggl button calc-k" value="-" />
+			<input type="button" class="ggl button calc-k" style="height: 58px;" value="+" />
+			<input type="button" class="ggl button calc-k" style="height: 58px;" value="=" />
+		</span>
+	</div>
+	<br>
+	<div class="well">
+		<div class="ggl dropdown">
+			<a href="#" class="ggl button"><span class="label">File</span><span class="toggle"></span></a>
+			<div class="ggl dropdown-slider">
+				<a href="#" class="ddm"><span class="label">New</span></a>
+				<a href="#" class="ddm"><span class="label">Save</span></a>
+			</div> <!-- /.dropdown-slider -->
+		</div> <!-- /.dropdown -->
+		<div class="ggl dropdown">
+			<a href="#" class="ggl button"><span class="icon icon197"></span><span class="label">World Regions</span><span class="toggle"></span></a>
+			<div class="ggl dropdown-slider">
+				<a href="#" class="ddm"><span class="label">The Americas</span></a>
+				<a href="#" class="ddm"><span class="label">Europe &amp; Eurasia</span></a>
+				<a href="#" class="ddm"><span class="label">Africa / Middle East</span></a>
+				<a href="#" class="ddm"><span class="label">East Asia &amp; The Pacific</span></a>
+				<a href="#" class="ddm"><span class="label">South &amp; Central Asia</span></a>
+			</div> <!-- /.dropdown-slider -->
+		</div> <!-- /.dropdown -->
+		<a href="#" class="ggl button left"><span class="icon icon108"></span></a>
+		<div class="ggl dropdown middle">
+			<a href="#" class="ggl button middle"><span class="icon icon68"></span><span class="toggle"></span></a>
+			<div class="ggl dropdown-slider">
+				<a href="#" class="ddm"><span class="icon icon3"></span><span class="label">Add</span></a>
+				<a href="#" class="ddm"><span class="icon icon145"></span><span class="label">Edit</span></a>
+				<a href="#" class="ddm"><span class="icon icon186"></span><span class="label">Trash</span></a>
+			</div> <!-- /.dropdown-slider -->
+		</div> <!-- /.dropdown -->
+		<a href="#" class="ggl button right"><span class="icon icon151"></span></a>
+		<div class="ggl dropdown">
+			<a href="#" class="ggl button"><span class="label">File</span><span class="toggle"></span></a>
+			<div class="ggl dropdown-slider">
+				<a href="#" class="ddm"><span class="label">New</span></a>
+				<a href="#" class="ddm"><span class="label">Save</span></a>
+			</div> <!-- /.dropdown-slider -->
+		</div> <!-- /.dropdown -->
+	</div>
+</body>
+</html>

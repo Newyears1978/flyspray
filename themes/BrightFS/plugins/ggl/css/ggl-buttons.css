@@ -1,0 +1,366 @@
+/*
+ * File: 		gglbuttons.css
+ * Name: 		GGL Buttons
+ * Description: Google+ like buttons
+ * version:		1.0.0
+ */
+
+
+.ggl {}
+.ggl.button {
+	font-family: Arial, Sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-shadow: 0 1px rgba(0,0,0,0.1);
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	height: 27px;
+	line-height: 27px;
+	padding: 0 10px;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+
+	-webkit-user-select: none;
+
+	-webkit-transition: border .20s;
+	-moz-transition: border .20s;
+	-o-transition: border .20s;
+	transition: border .20s;
+
+	display: inline-block;
+	outline: none;
+
+	vertical-align: top;
+	/*float: left;*/
+	/*margin: 0 2px 0 4px;*/
+	margin: 0 2px 2px 0;
+
+	color: #404040;
+}
+button.ggl.button, input[type=button].ggl.button, input[type=submit].ggl.button { height: 29px;  }
+
+.ggl.w100 { width: 100%; }
+
+.ggl.float-right { float: right !important; }
+.ggl.no-float { clear: both !important; }
+
+/* PHPStorm: <editor-fold desc="--[Buttons left/middle/right]"> */
+.ggl.button.left, button.ggl.button.left, input[type=button].ggl.button.left, input[type=submit].ggl.button.left {
+	/*margin: 5px 0 5px 5px;*/
+	margin: 0 0 0 4px;
+
+	border-top-right-radius: 0;
+	-webkit-border-top-right-radius: 0;
+	-moz-border-radius-topright: 0;
+
+	border-bottom-right-radius: 0;
+	-webkit-border-bottom-right-radius: 0;
+	-moz-border-radius-bottomright: 0;
+}
+
+.ggl.button.middle, button.ggl.button.middle, input[type=button].ggl.button.middle, input[type=submit].ggl.button.middle {
+	/*margin: 5px 0;*/
+	margin: 0;
+
+	border-left-color: #F4F4F4;
+
+	border-radius: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+}
+
+.ggl.button.right, button.ggl.button.right, input[type=button].ggl.button.right, input[type=submit].ggl.button.right {
+	/*margin: 5px 5px 5px 0;*/
+	margin: 0 2px 0 0;
+
+	border-left-color: #F4F4F4;
+
+	border-top-left-radius: 0;
+	-webkit-border-top-left-radius: 0;
+	-moz-border-radius-topleft: 0;
+
+	border-bottom-left-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-moz-border-radius-bottomleft: 0;
+}
+/* PHPStorm: </editor-fold>*/
+
+/* PHPStorm: <editor-fold desc="--[Button Colors]"> */
+.ggl.gray, .ggl.calc, .ggl.calc-k {
+	color: #666666 !important;
+}
+.ggl.blue, .ggl.red, .ggl.orange, .ggl.green, .ggl.dark {
+	color: #ffffff !important;
+}
+
+
+/* None
+----------------------- */
+.ggl.button {
+	background-color: #ffffff;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(transparent),to(transparent));
+	background-image: -webkit-linear-gradient(top,transparent,transparent);
+	background-image: -moz-linear-gradient(top,transparent,transparent);
+	background-image: -ms-linear-gradient(top,transparent,transparent);
+	background-image: -o-linear-gradient(top,transparent,transparent);
+	background-image: linear-gradient(top,transparent,transparent);
+	border: 1px solid rgba(0,0,0,.15);
+}
+.ggl.button:hover, .ggl.button1:focus {
+	border: 1px solid #d9d9d9;
+}
+.ggl.button:active {
+	background-color: #e5e5e5;
+	color: #262626
+}
+
+
+/* Gray & Calc
+----------------------- */
+.ggl.gray, .ggl.calc {
+	background-color: #f5f5f5;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#F1F1F1));
+	background-image: -webkit-linear-gradient(top,#f5f5f5,#F1F1F1);
+	background-image: -moz-linear-gradient(top,#f5f5f5,#F1F1F1);
+	background-image: -ms-linear-gradient(top,#f5f5f5,#F1F1F1);
+	background-image: -o-linear-gradient(top,#f5f5f5,#F1F1F1);
+	background-image: linear-gradient(top,#f5f5f5,#F1F1F1);
+
+	border: 1px solid #d9d9d9;
+}
+.ggl.gray:hover, .ggl.calc:hover {
+	border:1px solid #c6c6c6;
+	color:#333 !important;
+}
+
+
+/* Calc keyboard
+----------------------- */
+.ggl.calc-k {
+	background-color: #ebebeb;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#ebebeb),to(#e7e7e7));
+	background-image: -webkit-linear-gradient(top,#ebebeb,#E7E7E7);
+	background-image: -moz-linear-gradient(top,#ebebeb,#E7E7E7);
+	background-image: -ms-linear-gradient(top,#ebebeb,#E7E7E7);
+	background-image: -o-linear-gradient(top,#ebebeb,#E7E7E7);
+	background-image: linear-gradient(top,#ebebeb,#E7E7E7);
+
+	border: 1px solid #cfcfcf;
+}
+.ggl.calc-k:hover {
+	border:1px solid #bcbcbc;
+	color: #292929 !important;
+}
+
+
+
+/* Blue
+----------------------- */
+.ggl.blue {
+	background-color: #4d90fe;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#4d90fe),to(#4787ed));
+	background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+	background-image: -moz-linear-gradient(top,#4d90fe,#4787ed);
+	background-image: -ms-linear-gradient(top,#4d90fe,#4787ed);
+	background-image: -o-linear-gradient(top,#4d90fe,#4787ed);
+	background-image: linear-gradient(top,#4d90fe,#4787ed);
+
+	border: 1px solid #3079ed;
+}
+.ggl.blue:hover {
+	background-color: #357ae8;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#4d90fe),to(#357ae8));
+	background-image: -webkit-linear-gradient(top,#4d90fe,#357ae8);
+	background-image: -moz-linear-gradient(top,#4d90fe,#357ae8);
+	background-image: -ms-linear-gradient(top,#4d90fe,#357ae8);
+	background-image: -o-linear-gradient(top,#4d90fe,#357ae8);
+	background-image: linear-gradient(top,#4d90fe,#357ae8);
+
+	border: 1px solid #2f5bb7;
+}
+
+
+
+/* Red
+----------------------- */
+.ggl.red {
+	background-color: #d14836;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#dd4b39),to(#d14836));
+	background-image: -webkit-linear-gradient(top,#dd4b39,#d14836);
+	background-image: -moz-linear-gradient(top,#dd4b39,#d14836);
+	background-image: -ms-linear-gradient(top,#dd4b39,#d14836);
+	background-image: -o-linear-gradient(top,#dd4b39,#d14836);
+	background-image: linear-gradient(top,#dd4b39,#d14836);
+
+	border: 1px solid transparent;
+}
+.ggl.red:hover {
+	background-color: #c53727;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#dd4b39),to(#c53727));
+	background-image: -webkit-linear-gradient(top,#dd4b39,#c53727);
+	background-image: -moz-linear-gradient(top,#dd4b39,#c53727);
+	background-image: -ms-linear-gradient(top,#dd4b39,#c53727);
+	background-image: -o-linear-gradient(top,#dd4b39,#c53727);
+	background-image: linear-gradient(top,#dd4b39,#c53727);
+
+	border: 1px solid #b0281a;
+}
+.ggl.red:active {
+	background-color: #b0281a;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#dd4b39),to(#b0281a));
+	background-image: -webkit-linear-gradient(top,#dd4b39,#b0281a);
+	background-image: -moz-linear-gradient(top,#dd4b39,#b0281a);
+	background-image: -ms-linear-gradient(top,#dd4b39,#b0281a);
+	background-image: -o-linear-gradient(top,#dd4b39,#b0281a);
+	background-image: linear-gradient(top,#dd4b39,#b0281a);
+
+	border: 1px solid #992a1b;
+}
+
+
+/* Orange
+----------------------- */
+.ggl.orange {
+	background-color: #FDA352;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#FDA352),to(#FB8F3D));
+	background-image: -webkit-linear-gradient(top,#FDA352,#FB8F3D);
+	background-image: -moz-linear-gradient(top,#FDA352,#FB8F3D);
+	background-image: -ms-linear-gradient(top,#FDA352,#FB8F3D);
+	background-image: -o-linear-gradient(top,#FDA352,#FB8F3D);
+	background-image: linear-gradient(top,#FDA352,#FB8F3D);
+
+	border: 1px solid #FB8F3D;
+}
+.ggl.orange:hover {
+	background-color: #FD934D;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#FD934D),to(#F9760B));
+	background-image: -webkit-linear-gradient(top,#FD934D,#F9760B);
+	background-image: -moz-linear-gradient(top,#FD934D,#F9760B);
+	background-image: -ms-linear-gradient(top,#FD934D,#F9760B);
+	background-image: -o-linear-gradient(top,#FD934D,#F9760B);
+	background-image: linear-gradient(top,#FD934D,#F9760B);
+
+	border: 1px solid #EB5200;
+}
+
+
+/* Green
+----------------------- */
+.ggl.green {
+	background-color: #3D9400;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#3D9400),to(#398A00));
+	background-image: -webkit-linear-gradient(top,#3D9400,#398A00);
+	background-image: -moz-linear-gradient(top,#3D9400,#398A00);
+	background-image: -ms-linear-gradient(top,#3D9400,#398A00);
+	background-image: -o-linear-gradient(top,#3D9400,#398A00);
+	background-image: linear-gradient(top,#3D9400,#398A00);
+
+	border: 1px solid #29691D;
+}
+.ggl.green:hover, .ggl.calc:active, .ggl.calc-k:active {
+	background-color: #4bb301;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#4bb301),to(#4cb404));
+	background-image: -webkit-linear-gradient(top,#4bb301,#4cb404);
+	background-image: -moz-linear-gradient(top,#4bb301,#4cb404);
+	background-image: -ms-linear-gradient(top,#4bb301,#4cb404);
+	background-image: -o-linear-gradient(top,#4bb301,#4cb404);
+	background-image: linear-gradient(top,#4bb301,#4cb404);
+
+	border: 1px solid #45b131;
+}
+
+
+/* Dark
+----------------------- */
+.ggl.dark {
+	background-color: #444444;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#444444),to(#202020));
+	background-image: -webkit-linear-gradient(top,#444444,#202020);
+	background-image: -moz-linear-gradient(top,#444444,#202020);
+	background-image: -ms-linear-gradient(top,#444444,#202020);
+	background-image: -o-linear-gradient(top,#444444,#202020);
+	background-image: linear-gradient(top,#444444,#202020);
+
+	border: 1px solid #737373;
+}
+.ggl.dark:hover {
+	background-color: #434343;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#444444),to(#434343));
+	background-image: -webkit-linear-gradient(top,#444444,#434343);
+	background-image: -moz-linear-gradient(top,#444444,#434343);
+	background-image: -ms-linear-gradient(top,#444444,#434343);
+	background-image: -o-linear-gradient(top,#444444,#434343);
+	background-image: linear-gradient(top,#444444,#434343);
+
+	border: 1px solid #5a5b5c;
+}
+
+
+.ggl.button:hover {
+	text-shadow: 0 1px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+	-ms-box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+	-o-box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+	box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+.ggl.button:active {
+	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.ggl.button:disabled {
+	filter: alpha(opacity=30);
+	opacity: .3;
+	cursor: default;
+}
+
+/*PHPStorm: </editor-fold>*/
+
+
+
+.ggl.calculator { display: table; }
+.ggl.calculator span { display: table-cell; }
+.ggl.calculator > .ggl.calc, .ggl.calculator > span .ggl.calc,
+.ggl.calculator > .ggl.calc-k, .ggl.calculator > span .ggl.calc-k {
+	float:left;
+	font-size:15px;
+	min-width:40px;
+	margin: 0;
+}
+
+
+
+
+
+
+
+.bglow {
+	-webkit-box-shadow: -6px -8px 10px #b0d9ff, -4px 7px 10px #b0d9ff, 6px -4px 10px #b0d9ff;
+	-moz-box-shadow: -6px -8px 10px #b0d9ff, -4px 7px 10px #b0d9ff, 6px -4px 10px #b0d9ff;
+	box-shadow: -6px -8px 10px #b0d9ff, -4px 7px 10px #b0d9ff, 6px -4px 10px #b0d9ff;
+
+	-webkit-transition: box-shadow .4s ease;
+	-moz-transition: box-shadow .4s ease;
+	-o-transition: box-shadow .4s ease;
+	-ms-transition: box-shadow .4s ease;
+	transition: box-shadow .4s ease;
+	z-index:99999999;
+}
+
+
+.imbtn {
+	/*min-width: 30px;*/
+	margin: 0 !important;
+	padding: 0 3px 0px 3px !important;
+	width: 41px !important;
+	height: 33px !important;
+}
+.im {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+}

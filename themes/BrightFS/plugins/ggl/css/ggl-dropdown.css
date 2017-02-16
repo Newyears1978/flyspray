@@ -1,0 +1,113 @@
+div.ggl.dropdown {
+	float: left;
+	position: relative;
+	/*z-index: 100;*/
+}
+div.ggl.dropdown span.toggle {
+	width: 19px;
+	height: 16px;
+
+	margin-left: 10px;
+	margin-top: 5px;
+	padding-left: 8px;
+
+	float: right;
+
+	background: url('../images/toggle.png') top right no-repeat;
+	border-left: 1px solid #D9D9D9;
+
+	-webkit-transition: border-color .20s;
+	-moz-transition: border .20s;
+	-o-transition: border-color .20s;
+	transition: border-color .20s;
+}
+
+div.ggl.dropdown span.toggle.active {
+	background: url('../images/toggle.png') bottom right no-repeat;
+}
+div.ggl.dropdown div.ggl.button:hover span.toggle {
+	border-color: #C0C0C0;
+}
+div.ggl.dropdown-slider {
+	display: none;
+	/*overflow: hidden;*/
+
+	margin: 0 7px 5px 7px;
+	position: absolute;
+	top: 29px;
+	left: 0;
+	background: #F2F2F2;
+
+	border-right: solid 1px #D9D9D9;
+	border-bottom: solid 1px #D9D9D9;
+	border-left: solid 1px #D9D9D9;
+
+	-webkit-border-bottom-right-radius: 2px;
+	-webkit-border-bottom-left-radius: 2px;
+	-moz-border-radius-bottomright: 2px;
+	-moz-border-radius-bottomleft: 2px;
+	border-bottom-right-radius: 2px;
+	border-bottom-left-radius: 2px;
+
+	-webkit-transition: border-color .20s;
+	-moz-transition: border .20s;
+	-o-transition: border-color .20s;
+	transition: border-color .20s;
+	z-index: 2;
+}
+.ggl.left div.ggl.dropdown-slider {
+	margin: 0 1px 5px 7px;
+}
+.ggl.middle div.ggl.dropdown-slider {
+	margin: 0 1px 5px 1px;
+}
+.ggl.right div.ggl.dropdown-slider {
+	margin: 0 7px 5px 1px;
+}
+div.ggl.dropdown-slider .ddm, div.ggl.dropdown-slider .ddt {
+	display: inline-block;
+	background: #F2F2F2;
+	color: #585858;
+
+	text-decoration: none;
+	text-shadow: 0 1px 0 #fff;
+	font: bold 11px Helvetica, Arial, sans-serif;
+	line-height: 18px;
+	height: 18px;
+
+	margin: 0;
+	padding: 5px 13px 4px 13px;
+	width: 160px;
+	float: left;
+
+	/*border-bottom: 1px solid #D9D9D9;*/
+	cursor: pointer;
+}
+div.ggl.dropdown-slider .ddt {
+	color: #000;
+	cursor: default;
+
+	padding-left: 6px;
+	padding-right: 20px;
+	padding-top: 15px;
+	padding-bottom: 2px;
+
+	line-height: 11px;
+	height: 11px;
+}
+
+div.ggl.dropdown-slider .ddm:hover {
+	background: #e0e0e0;
+	border-bottom-color: #C0C0C0;
+}
+div.ggl.dropdown-slider .ddm:active {
+	border-bottom-color: #4D90FE;
+	color: #4D90FE;
+
+	-moz-box-shadow:inset 0 0 10px #D4D4D4;
+	-webkit-box-shadow:inset 0 0 10px #D4D4D4;
+	box-shadow:inset 0 0 10px #D4D4D4;
+}
+div.ggl.dropdown-slider .ddm:last-child {
+	border-bottom: none;
+}
